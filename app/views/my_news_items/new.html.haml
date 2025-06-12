@@ -1,0 +1,24 @@
+.row.mt-2
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        %h1.text-center Select Representative and Issue
+
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        = form_with url: search_news_my_news_items_representative_my_news_items_url, method: :post, local: true do |f|
+            .form-group
+                %label{ for: 'representative' } Representative:
+                = f.select :representative_id,
+                options_for_select(@representatives_list,
+                selected: params[:representative_id]), {},
+                class: 'form-control'
+            .form-group.mt-3
+                %label{ for: 'issue' } Issue:
+                = f.select :issue, options_for_select(@issues_list), {}, class: 'form-control'
+            .form-group.mt-3.text-center
+                = f.submit 'Search', class: 'btn btn-primary'
+
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        .clearfix.mt-3
+            .float-right
+                = link_to representatives_path, class: 'btn btn-info' do
+                    View Representatives
+                    %i.fas.fa-arrow-right

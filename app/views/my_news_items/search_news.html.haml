@@ -1,0 +1,49 @@
+.row.mt-2
+    .col-12.col-md-8.offset-md-2
+        %h1.text-center Edit News Item
+
+    .col-12.col-md-8.offset-md-2
+        %p
+            %strong Representative:
+            = link_to @representative.name, representative_path(@representative), target: "_blank"
+
+        %p
+            %strong Issue:
+            = @issue
+
+        %h2 Select an Article:
+
+        = form_with url: save_article_my_news_item_representative_my_news_items_url(@representative),
+        method: :post, local: true do |f|
+            - @articles.each_with_index do |article, index|
+                .article-option.mb-3
+                    = radio_button_tag :article_index, index
+                    %p
+                        %strong Title:
+                        = article['title']
+                    = hidden_field_tag "article_title_#{index}", article['title']
+                    %p
+                        %strong Description:
+                        = article['description']
+                    = hidden_field_tag "article_description_#{index}", article['description']
+                    %p
+                        %strong Link:
+                        = link_to "Read Article", article['url'], target: "_blank", rel: "noopener noreferrer"
+                    = hidden_field_tag "article_url_#{index}", article['url']
+                    %hr/
+
+            .form-group
+                %label{ for: 'rating' } Rating:
+                = number_field_tag :rating, nil, min: 1, max: 5, class: 'form-control'
+
+            = hidden_field_tag :representative_id, @representative.id
+            = hidden_field_tag :issue, @issue
+
+            .form-group.text-center
+                = f.submit 'Save', class: 'btn btn-primary'
+
+        .clearfix.mt-3
+            .float-right
+                = link_to representative_news_items_path(@representative), class: 'btn btn-info' do
+                    View News Articles
+                    %i.fas.fa-arrow-right

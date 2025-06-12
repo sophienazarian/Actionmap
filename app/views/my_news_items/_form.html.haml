@@ -1,0 +1,46 @@
+= form_for news_item, url: form_url, html: { method: form_method } do |f|
+    - if news_item.errors.any?
+        .alert.alert-danger
+            %h2
+                "#{pluralize(news_item.errors.count, 'error')} prohibited this news from being saved:"
+            %ul
+                - news_item.errors.full_messages.each do |message|
+                    %li= message
+
+    .form-group.row
+        .col-sm-3
+            = label :news_item, :title, 'Title:', class: 'col-form-label text-right'
+        .col-sm-9
+            = text_field :news_item, :title, class: 'form-control', placeholder: 'Enter the title of the article...'
+
+    .form-group.row
+        .col-sm-3
+            = label :news_item, :link, 'Link:', class: 'col-form-label text-right'
+        .col-sm-9
+            = text_field :news_item, :link, class: 'form-control', placeholder: 'Enter the article link...'
+
+    .form-group.row
+        .col-sm-3
+            = label :news_item, :description, 'Description:', class: 'col-form-label text-right'
+        .col-sm-9
+            = text_area :news_item, :description, class: 'form-control',
+            placeholder: 'Enter a description for the article...'
+
+    .form-group.row
+        .col-sm-3
+            = label :news_item, :representative_id, 'Representative:', class: 'col-form-label text-right'
+        .col-sm-9
+            = select :news_item, :representative_id, representatives_list,
+            { include_blank: true },
+            class: 'form-control'
+
+    .form-group.row
+        .col-sm-3
+            = label :news_item, :issue, 'Issue:', class: 'col-form-label text-right'
+        .col-sm-9
+            = select :news_item, :issue,
+            NewsItem::ISSUES, { include_blank: 'Select an Issue', selected: news_item.issue&.name },
+            class: 'form-control'
+
+    .form-group.text-center
+        = f.submit 'Save', class: 'btn btn-primary'

@@ -1,0 +1,34 @@
+.container-fluid
+    .row
+        .col-md-8.offset-md-2
+            .table-responsive-md.pt-5
+                %table.table.table-bordered
+                    %caption.text-center
+                        Details for #{@representative.name}
+                    %thead.thead-dark
+                        %tr
+                            %th Field
+                            %th Information
+                    %tbody
+                        %tr
+                            %td Name
+                            %td= @representative.name
+                        %tr
+                            %td Office
+                            %td= @representative.title
+                        %tr
+                            %td Party
+                            %td= @representative.party
+                        %tr
+                            %td Address
+                            %td= @representative.full_address
+                        %tr
+                            %td Photo
+                            %td= @representative.photo_tag
+    .row.mt-2
+        .col-md-8.offset-md-2
+            .clearfix
+                .float-right
+                    = link_to representatives_path, class: 'mx-1 btn btn-info' do
+                        %i.fas.fa-list
+                        View All Representatives
